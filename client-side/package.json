@@ -1,0 +1,22 @@
+{
+  "name": "hoot-engine-client",
+  "version": "0.0.1",
+  "description": "A open-source 2d Javascript game engine",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-client": "npx webpack --config webpack.config.js"
+  },
+  "keywords": [
+    "Game Engine",
+    "Client"
+  ],
+  "author": "The Hoot Engine",
+  "license": "ISC",
+  "dependencies": {
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.26.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "hoot-engine-server",
+  "version": "0.0.1",
+  "description": "A open-source 2d Javascript game engine",
+  "private": false,
+  "main": "./build/hoot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish-server": "npm publish --access public",
+    "build-server": "npx webpack --config webpack.config.js"
+  },
+  "keywords": [
+    "Game Engine",
+    "Server"
+  ],
+  "author": "The Hoot Engine",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.26.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
+  }
+}
