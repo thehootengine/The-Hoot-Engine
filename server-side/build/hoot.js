@@ -19571,6 +19571,151 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./Core/index.js":
+/*!***********************!*\
+  !*** ./Core/index.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+const Core = {
+    Engine: __webpack_require__(/*! ./modules/Engine */ "./Core/modules/Engine.js"),
+    Events: __webpack_require__(/*! ./modules/Events */ "./Core/modules/Events.js")
+};
+
+module.exports = Core;
+
+/***/ }),
+
+/***/ "./Core/modules/Engine.js":
+/*!********************************!*\
+  !*** ./Core/modules/Engine.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+const fs = __webpack_require__(/*! fs */ "fs");
+const path = __webpack_require__(/*! path */ "path");
+
+class Engine {
+    constructor(config) {
+        this.enabled = true;
+        if (typeof config !== "string" && typeof config !== "object") {
+            console.log("Hoot: No 'package.json' file path supplied");
+            this.enabled = false;
+        }
+        this.events = new Hoot.Core.Events();
+
+        this.status = "working";
+
+        this.config = null;
+        if (this.enabled) {
+            if (typeof config === "string") {
+                fs.readFile(config, "utf-8", function(err, data) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    data = JSON.parse(data);
+                    this.config = this._fixConfig(data);
+
+                    this.events.emit("config-loaded", { config: this.config });
+                }.bind(this));
+            }else if (typeof config === "object") {
+                this.config = this._fixConfig(config);
+
+                this.events.emit("config-loaded", { config: this.config });
+            }
+        }
+
+        this.server = new Hoot.Network.Server(this);
+        this.on("config-loaded", function(event) {
+            this.status = "ready";
+
+            this.server.init();
+            this.server.start();
+
+            this.events.emit("ready", { engine: this });
+        }.bind(this));
+
+    }
+
+    on(eventName, callback) {
+        if (typeof eventName !== "string") {
+            return false;
+        }
+        if (typeof callback !== "function") {
+            return false;
+        }
+
+        this.events.on(eventName, callback);
+    }
+
+    _fixConfig(config) {
+        if (typeof config !== "object") {
+            config = {
+                server: {
+                    port: 8080,
+                    local: true
+                },
+                client: {
+                    basePath: "",
+                    views: []
+                }
+            };
+        }else {
+            if (typeof config.server !== "object") {
+                config.server = {
+                    port: 8080,
+                    local: true
+                };
+            }else {
+                if (typeof config.server.port !== "number") {
+                    config.server.port = 8080;
+                }
+                if (typeof config.server.local !== "boolean") {
+                    config.server.local = true;
+                }
+            }
+
+            if (typeof config.client !== "object") {
+                config.client = {
+                    basePath: "",
+                    views: []
+                };
+            }else {
+                if (typeof config.client.basePath !== "string") {
+                    config.client.basePath = "";
+                }
+                if (typeof config.client.views !== "object") {
+                    config.client.views = [];
+                }
+            }
+        }
+        return config;
+    }
+}
+
+module.exports = Engine;
+
+/***/ }),
+
+/***/ "./Core/modules/Events.js":
+/*!********************************!*\
+  !*** ./Core/modules/Events.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+const Events = __webpack_require__(/*! events */ "events").EventEmitter;
+
+module.exports = Events;
+
+/***/ }),
+
 /***/ "./Network/index.js":
 /*!**************************!*\
   !*** ./Network/index.js ***!
@@ -19594,30 +19739,91 @@ module.exports = Network;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(__dirname) {
+
 const express = __webpack_require__(/*! express */ "../node_modules/express/index.js");
+const fs = __webpack_require__(/*! fs */ "fs");
 const path = __webpack_require__(/*! path */ "path");
 
 class Server {
-    constructor(port, filePath) {
-        this.port = port || 8000;
-        this.path = filePath || path.join(__dirname, filePath);
+    constructor(engine) {
+        this.engine = engine || null;
+        this.hasEngine = true;
+        if (this.engine === null) {
+            this.hasEngine = false;
+        }
 
+        this.events = new Hoot.Core.Events();
+
+        this.config = null;
         this.app = express();
-        this.app.use(express.static('/'));
-        this.app.get('/', function(require, response) {
-            response.sendFile(this.path);
-        });
+
+        this.view = null;
+    }
+
+    on(eventName, callback) {
+        if (typeof eventName !== "string") {
+            return false;
+        }
+        if (typeof callback !== "function") {
+            return false;
+        }
+
+        this.events.on(eventName, callback);
+    }
+
+    init() {
+        if (this.hasEngine) {
+            if (this.engine.enabled) {
+                if (this.engine.status === "ready") {
+                    this._init();
+                }else {
+                    this.engine.on("ready", function() {
+                        this._init();
+                    }.bind(this));
+                }
+            }
+        }
+    }
+
+    _init() {
+        this.config = this.engine.config;
+
+        for (let i in this.config.client.views) {
+            if (this.config.client.views[i].default) {
+                this.view = this.config.client.views[i];
+            }
+        }
+
+        this.app.use(express.static(this.config.client.basePath));
+
+        this.app.get('/', function(req, res) {
+            res.sendFile(path.join(this.config.client.basePath, this.currentView.path), { root: path.resolve('./') });
+        }.bind(this));
     }
 
     start() {
-        this.app.listen(this.port);
-        console.log("Server running: http://localhost:" + this.port.toString());
+        if (this.hasEngine) {
+            if (this.engine.enabled) {
+                if (this.engine.status === "ready") {
+                    this._start();
+                }else {
+                    this.engine.on("ready", function() {
+                        this._start();
+                    }.bind(this));
+                }
+            }
+        }
+    }
+
+    _start() {
+        this.app.listen(this.config.server.port);
+        console.log("Server running: http://localhost:" + this.config.server.port.toString());
+
+        this.events.emit("started", { server: this });
     }
 }
 
 module.exports = Server;
-/* WEBPACK VAR INJECTION */}.call(this, "/"))
 
 /***/ }),
 
@@ -19630,6 +19836,7 @@ module.exports = Server;
 
 
 const Hoot = {
+    Core: __webpack_require__(/*! ./Core */ "./Core/index.js"),
     Network: __webpack_require__(/*! ./Network */ "./Network/index.js")
 };
 

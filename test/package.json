@@ -2,10 +2,11 @@
   "name": "hoot-engine-test",
   "version": "0.0.4",
   "description": "A open-source 2d Javascript game engine",
+  "private": false,
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "npm start ./server.js"
+    "run": "node ./server/server.js"
   },
   "keywords": [
     "Javascript",

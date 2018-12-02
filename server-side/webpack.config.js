@@ -10,6 +10,7 @@ const webpack = require("webpack");
  * Plugins
  */
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 
 
@@ -54,7 +55,7 @@ module.exports = {
         ]
     },
     plugins: [
-        //new CleanWebpackPlugin([ 'build' ])
+        new CleanWebpackPlugin([ 'build' ])
     ],
     devtool: "source-map"
 };

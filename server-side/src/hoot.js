@@ -1,5 +1,6 @@
 
 const Hoot = {
+    Core: require("./Core"),
     Network: require("./Network")
 };
 

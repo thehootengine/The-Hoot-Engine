@@ -1,0 +1,15 @@
+{
+  "server": {
+    "port": 8080,
+    "local": true
+  },
+  "client": {
+    "basePath": "client",
+    "views": [
+      {
+        "default": true,
+        "path": "index.html"
+      }
+    ]
+  }
+}
