@@ -4,22 +4,35 @@ class Event {
         this.config = this._fixConfig(config);
 
         this.data = null;
+
         this.repeated = 0;
 
         if (this.config.repeat == -1) {
+
             this.data = window.setInterval(this.config.callback.bind(this.config.callbackScope), this.config.delay);
+
         }else if (this.config.repeat > 0) {
+
             this.data = window.setInterval(function() {
+
                 if (this.repeated <= this.config.repeat) {
+
                     this.config().callback.bind(this.config.callbackScope);
+
                 }else {
+
                     this.stop();
+
                 }
 
                 this.repeated += 1;
+
             }.bind(this), this.config.delay);
+
         }else if (this.config.repeat == 0) {
+
             this.data = window.setTimeout(this.config.callback.bind(this.config.callbackScope), this.config.delay);
+
         }
 
 
@@ -69,6 +82,7 @@ class Event {
 
         if (this.config.repeat === 0) {
             this.data = window.clearTimeout(this.data);
+
         }else {
             this.data = window.clearInterval(this.data);
         }

@@ -11,6 +11,9 @@ const loader = new Hoot.Loader("loader", engine);
 loader.loadImage("img-test", "assets/images/shoe.png");
 
 loader.events.on("complete", function() {
-    console.log("Event Complete");
+    display.getContext().drawImage(loader.get("img-test").data, 20, 20);
 });
-loader.start();
+
+display.events.on("ready", function() {
+    loader.start();
+});

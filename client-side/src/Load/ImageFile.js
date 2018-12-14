@@ -1,7 +1,7 @@
 
 class ImageFile {
     constructor(loader, key, path, config) {
-        this.events = new Hoot.Events("image-" + (loader.images.length).toString());
+        this.events = new Hoot.Events("image-" + loader.name + "-" + (loader.audio.length).toString());
 
         this.loader = loader;
 
@@ -34,7 +34,7 @@ class ImageFile {
             height: null
         };
 
-        this.isLoading = true;
+        this.isLoading = false;
 
         this.data = null;
     }
@@ -60,10 +60,14 @@ class ImageFile {
 
     load() {
         if (this.loadable) {
+            this.isLoading = true;
+
             this.data = new Image();
             this.data.src = this.loader.basePath + this.path;
 
             this.data.onload = function() {
+                this.isLoading = false;
+
                 this.size.width = this.data.width;
                 this.size.height = this.data.height;
 

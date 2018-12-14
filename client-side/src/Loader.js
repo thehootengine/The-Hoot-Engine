@@ -18,6 +18,7 @@ class Loader {
         this.loaded = new Hoot.Utils.List();
 
         this.images = new Hoot.Utils.List();
+        this.audio = new Hoot.Utils.List();
 
         this.canUse = false;
     }
@@ -61,8 +62,19 @@ class Loader {
      * Load different file types
      */
     loadImage(key, path, config) {
-        this.queue.add(new Hoot.Load.ImageFile(this, key, path, config));
-        this.images.add(this.queue.get("last"));
+        let file = new Hoot.Load.ImageFile(this, key, path, config);
+
+        this.queue.add(file);
+
+        this.images.add(file);
+    }
+
+    loadAudio(key, path, config) {
+        let file = new Hoot.Load.AudioFile(this, key, path, config);
+
+        this.queue.add(file);
+
+        this.audio.add(file);
     }
 
     get(key) {
@@ -71,8 +83,8 @@ class Loader {
         }
 
         for (let i in this.loaded.array) {
-            if (this.loaded.array[i].key === key) {
-                return this.loaded.get(i).data;
+            if (this.loaded.get(i).key === key) {
+                return this.loaded.get(i);
             }
         }
     }
