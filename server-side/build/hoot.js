@@ -19571,27 +19571,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./Core/index.js":
-/*!***********************!*\
-  !*** ./Core/index.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-const Core = {
-    Engine: __webpack_require__(/*! ./modules/Engine */ "./Core/modules/Engine.js"),
-    Events: __webpack_require__(/*! ./modules/Events */ "./Core/modules/Events.js")
-};
-
-module.exports = Core;
-
-/***/ }),
-
-/***/ "./Core/modules/Engine.js":
-/*!********************************!*\
-  !*** ./Core/modules/Engine.js ***!
-  \********************************/
+/***/ "./Engine.js":
+/*!*******************!*\
+  !*** ./Engine.js ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19606,7 +19589,7 @@ class Engine {
             console.log("Hoot: No 'package.json' file path supplied");
             this.enabled = false;
         }
-        this.events = new Hoot.Core.Events();
+        this.events = new Hoot.Events();
 
         this.status = "working";
 
@@ -19702,10 +19685,10 @@ module.exports = Engine;
 
 /***/ }),
 
-/***/ "./Core/modules/Events.js":
-/*!********************************!*\
-  !*** ./Core/modules/Events.js ***!
-  \********************************/
+/***/ "./Events.js":
+/*!*******************!*\
+  !*** ./Events.js ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19716,26 +19699,10 @@ module.exports = Events;
 
 /***/ }),
 
-/***/ "./Network/index.js":
-/*!**************************!*\
-  !*** ./Network/index.js ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-const Network = {
-    Server: __webpack_require__(/*! ./modules/Server */ "./Network/modules/Server.js")
-};
-
-module.exports = Network;
-
-/***/ }),
-
-/***/ "./Network/modules/Server.js":
-/*!***********************************!*\
-  !*** ./Network/modules/Server.js ***!
-  \***********************************/
+/***/ "./Network/Server.js":
+/*!***************************!*\
+  !*** ./Network/Server.js ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19752,7 +19719,7 @@ class Server {
             this.hasEngine = false;
         }
 
-        this.events = new Hoot.Core.Events();
+        this.events = new Hoot.Events();
 
         this.config = null;
         this.app = express();
@@ -19775,47 +19742,79 @@ class Server {
         if (this.hasEngine) {
             if (this.engine.enabled) {
                 if (this.engine.status === "ready") {
-                    this._init();
+                    this._init2();
                 }else {
                     this.engine.on("ready", function() {
-                        this._init();
+                        this._init2();
                     }.bind(this));
                 }
             }
         }
     }
 
-    _init() {
+    _init2() {
         this.config = this.engine.config;
 
-        for (let i in this.config.client.views) {
-            if (this.config.client.views[i].default) {
-                this.view = this.config.client.views[i];
+        //Check to see if there are views in the config
+        let hasViews = false;
+        if (this.config.client.views.length > 0) {
+            hasViews = true;
+        }
+
+        //Test to see if there is a default view
+        let hasDefault = false;
+        for (let j in this.config.client.views) {
+            if (this.config.client.views[j].default) {
+                hasDefault = true;
             }
+        }
+
+        //If there's no default view then set the first view in the array to default
+        if (hasViews) {
+            if (!hasDefault) {
+                console.log(this.config.client.views[0]);
+                this.config.client.views[0].default = true;
+            }
+        }
+
+
+
+        /*
+         * Routing
+         */
+        for (let i in this.config.client.views) {
+
+            if (this.config.client.views[i].default) {
+                this.app.get('/', function (req, res) {
+                    res.sendFile(path.join(this.config.client.basePath, this.config.client.views[i].path), {root: path.resolve('./')});
+                }.bind(this));
+            }else {
+                this.app.get('/' + this.config.client.views[i].name, function (req, res) {
+                    res.sendFile(path.join(this.config.client.basePath, this.config.client.views[i].path), {root: path.resolve("./")});
+                }.bind(this));
+            }
+
         }
 
         this.app.use(express.static(this.config.client.basePath));
 
-        this.app.get('/', function(req, res) {
-            res.sendFile(path.join(this.config.client.basePath, this.currentView.path), { root: path.resolve('./') });
-        }.bind(this));
     }
 
     start() {
         if (this.hasEngine) {
             if (this.engine.enabled) {
                 if (this.engine.status === "ready") {
-                    this._start();
+                    this._start2();
                 }else {
                     this.engine.on("ready", function() {
-                        this._start();
+                        this._start2();
                     }.bind(this));
                 }
             }
         }
     }
 
-    _start() {
+    _start2() {
         this.app.listen(this.config.server.port);
         console.log("Server running: http://localhost:" + this.config.server.port.toString());
 
@@ -19824,6 +19823,22 @@ class Server {
 }
 
 module.exports = Server;
+
+/***/ }),
+
+/***/ "./Network/index.js":
+/*!**************************!*\
+  !*** ./Network/index.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+const Network = {
+    Server: __webpack_require__(/*! ./Server */ "./Network/Server.js")
+};
+
+module.exports = Network;
 
 /***/ }),
 
@@ -19836,7 +19851,8 @@ module.exports = Server;
 
 
 const Hoot = {
-    Core: __webpack_require__(/*! ./Core */ "./Core/index.js"),
+    Engine: __webpack_require__(/*! ./Engine */ "./Engine.js"),
+    Events: __webpack_require__(/*! ./Events */ "./Events.js"),
     Network: __webpack_require__(/*! ./Network */ "./Network/index.js")
 };
 

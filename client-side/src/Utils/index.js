@@ -1,6 +1,6 @@
 
 const Utils = {
-    List: require("./modules/List")
+    List: require("./List")
 };
 
 module.exports = Utils;

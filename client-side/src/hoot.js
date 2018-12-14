@@ -1,10 +1,15 @@
 
 const Hoot = {
+    //Files
+    Engine: require("./Engine"),
+    Events: require("./Events"),
+    Loader: require("./Loader"),
+    //Folders
     Cameras: require("./Cameras"),
-    Core: require("./Core"),
     DOM: require("./DOM"),
     GameObjects: require("./GameObjects"),
     Load: require("./Load"),
+    Math: require("./Math"),
     Network: require("./Network"),
     Scenes: require("./Scenes"),
     Stored: require("./Stored"),

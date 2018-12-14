@@ -1,7 +1,7 @@
 
 
 const Load = {
-    File: require("./modules/File")
+    ImageFile: require("./ImageFile")
 };
 
 module.exports = Load;

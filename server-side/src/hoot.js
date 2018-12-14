@@ -1,6 +1,7 @@
 
 const Hoot = {
-    Core: require("./Core"),
+    Engine: require("./Engine"),
+    Events: require("./Events"),
     Network: require("./Network")
 };
 

@@ -103,27 +103,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
+eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || Function(\"return this\")() || (1, eval)(\"this\");\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///../node_modules/webpack/buildin/global.js");
 
 /***/ }),
 
@@ -134,12 +114,7 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const Cameras = {
-    Camera2d: __webpack_require__(/*! ./modules/Camera2d */ "./Cameras/modules/Camera2d.js")
-};
-
-module.exports = Cameras;
+eval("\r\nconst Cameras = {\r\n    Camera2d: __webpack_require__(/*! ./modules/Camera2d */ \"./Cameras/modules/Camera2d.js\")\r\n};\r\n\r\nmodule.exports = Cameras;\n\n//# sourceURL=webpack:///./Cameras/index.js");
 
 /***/ }),
 
@@ -150,354 +125,18 @@ module.exports = Cameras;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-
-class Camera2d {
-    constructor(engine) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
-
-        this.perspective = {
-            x: 0,
-            y: 0,
-            width: 960,
-            height: 720
-        };
-
-        if (this.hasEngine) {
-            this.perspective.width = this.engine.getDisplay().getWidth();
-            this.perspective.height = this.engine.getDisplay().getHeight();
-        }
-
-        this.target = target;
-
-        this.rendered = new Hoot.Utils.List();
-    }
-
-    setTarget(target) {
-        if (!(target instanceof Hoot.GameObjects.Sprite)) {
-            return false;
-        }
-        this.target = target;
-    }
-
-    add(gameObject) {
-        if (!(gameObject instanceof Hoot.GameObjects)) {
-            return false;
-        }
-
-        this.rendered.add(gameObject);
-    }
-
-    tick() {
-
-    }
-
-    render() {
-
-    }
-}
-
-module.exports = Camera2d;
+eval("\r\n\r\nclass Camera2d {\r\n    constructor(engine) {\r\n        this.engine = engine || null;\r\n        this.hasEngine = true;\r\n        if (this.engine === null) {\r\n            this.hasEngine = false;\r\n        }\r\n\r\n        this.perspective = {\r\n            x: 0,\r\n            y: 0,\r\n            width: 960,\r\n            height: 720\r\n        };\r\n\r\n        if (this.hasEngine) {\r\n            this.perspective.width = this.engine.getDisplay().getWidth();\r\n            this.perspective.height = this.engine.getDisplay().getHeight();\r\n        }\r\n\r\n        this.target = target;\r\n\r\n        this.rendered = new Hoot.Utils.List();\r\n    }\r\n\r\n    setTarget(target) {\r\n        if (!(target instanceof Hoot.GameObjects.Sprite)) {\r\n            return false;\r\n        }\r\n        this.target = target;\r\n    }\r\n\r\n    add(gameObject) {\r\n        if (!(gameObject instanceof Hoot.GameObjects)) {\r\n            return false;\r\n        }\r\n\r\n        this.rendered.add(gameObject);\r\n    }\r\n\r\n    tick() {\r\n\r\n    }\r\n\r\n    render() {\r\n\r\n    }\r\n}\r\n\r\nmodule.exports = Camera2d;\n\n//# sourceURL=webpack:///./Cameras/modules/Camera2d.js");
 
 /***/ }),
 
-/***/ "./Core/index.js":
-/*!***********************!*\
-  !*** ./Core/index.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-const Core = {
-    Engine: __webpack_require__(/*! ./modules/Engine */ "./Core/modules/Engine.js"),
-    Event: __webpack_require__(/*! ./modules/Event */ "./Core/modules/Event.js"),
-    Events: __webpack_require__(/*! ./modules/Events */ "./Core/modules/Events.js"),
-    Loader: __webpack_require__(/*! ./modules/Loader */ "./Core/modules/Loader.js")
-};
-
-module.exports = Core;
-
-
-
-/***/ }),
-
-/***/ "./Core/modules/Engine.js":
-/*!********************************!*\
-  !*** ./Core/modules/Engine.js ***!
-  \********************************/
+/***/ "./DOM/Display.js":
+/*!************************!*\
+  !*** ./DOM/Display.js ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-
-class Engine {
-    constructor(config) {
-        this.config = null;
-        if (typeof config === "string") {
-            let xhttp = new XMLHttpRequest();
-            xhttp.onload = function() {
-                this.config = this.fixConfig(JSON.parse(xhttp.responseText));
-                new Hoot.Core.Event("hoot-engine-config-loaded", {}).dispatch();
-            }.bind(this);
-            xhttp.open("GET", config);
-            xhttp.send(null);
-        }else {
-            this.config = this.fixConfig(config);
-            new Hoot.Core.Event("hoot-engine-config-loaded", {}).dispatch();
-        }
-
-        this.display = null;
-        Hoot.Core.Events.addListener("hoot-engine-config-loaded", function(event) {
-            Hoot.Core.Events.addListener("hoot-display-loaded", function(event2) {
-                this.display = event2.display;
-                new Hoot.Core.Event("hoot-loaded", { engine: this }).dispatch();
-            }, this);
-
-            this.display = new Hoot.DOM.Display(this, this.config.parent, this.config.width, this.config.height, {
-                smoothingEnabled: this.config.renderer.smoothingEnabled
-            });
-        }, this);
-
-
-        this.loader = new Hoot.Core.Loader(this);
-        this.time = new Hoot.Time.Manager(this);
-        this.scene = new Hoot.Scenes.Manager(this);
-
-    }
-
-    fixConfig(config) {
-        if (typeof config !== "object") {
-            config = {
-                title: "",
-                author: "",
-                version: "1.0.0",
-                description: "",
-                parent: "",
-                scale: {
-                    width: 960,
-                    height: 720,
-                    mode: "DEFAULT"
-                },
-                renderer: {
-                    smoothing: true
-                }
-            };
-        }else {
-            // TODO Put all configuration values that will need to be set and FIXED here!
-            if (typeof config.title !== "string") {
-                config.title = "";
-            }
-            if (typeof config.author !== "string") {
-                config.author = "";
-            }
-            if (typeof config.version !== "string") {
-                config.version = "1.0.0";
-            }
-            if (typeof config.description !== "string") {
-                config.description = "";
-            }
-            if (typeof config.parent !== "string") {
-                config.parent = "";
-            }
-            if (typeof config.scale !== "object") {
-                config.scale = {
-                    width: 960,
-                    height: 720,
-                    mode: "DEFAULT"
-                };
-            } else {
-                if (typeof config.scale.width !== "number") {
-                    config.scale.width = 960;
-                }
-                if (typeof config.scale.height !== "number") {
-                    config.scale.height = 720;
-                }
-                if (typeof config.scale.mode !== "string") {
-                    config.scale.mode = "DEFAULT";
-                }
-            }
-            if (typeof config.renderer !== "object") {
-                config.renderer = {
-                    smoothingEnabled: true
-                };
-            } else {
-                if (typeof config.renderer.smoothingEnabled !== "boolean") {
-                    config.renderer.smoothingEnabled = true;
-                }
-            }
-        }
-
-        return config;
-    }
-
-
-    getDisplay() {
-        return this.display;
-    }
-
-    getLoader() {
-        return this.loader;
-    }
-}
-
-module.exports = Engine;
-
-/***/ }),
-
-/***/ "./Core/modules/Event.js":
-/*!*******************************!*\
-  !*** ./Core/modules/Event.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-class Event extends CustomEvent {
-    constructor(eventName, options) {
-        super(eventName, { detail: options });
-
-        this.name = eventName;
-        this.options = options;
-    }
-
-    dispatch() {
-        document.dispatchEvent(this);
-    }
-}
-
-module.exports = Event;
-
-/***/ }),
-
-/***/ "./Core/modules/Events.js":
-/*!********************************!*\
-  !*** ./Core/modules/Events.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-class Events {
-    static addListener(eventName, callback, callbackScope) {
-        if (typeof eventName !== "string") {
-            console.error("Hoot: Could not add event listener with 'eventName' of undefined!");
-            return false;
-        }
-        if (typeof callback !== "function") {
-            console.error("Hoot: There is no event listener's 'callback'");
-            return false;
-        }
-        if (typeof callbackScope === "undefined") {
-            callbackScope = null;
-        }
-        let callback2 = callback.bind(callbackScope);
-        document.addEventListener(eventName, function(event) {
-            callback2(event.detail);
-        });
-    }
-}
-
-module.exports = Events;
-
-/***/ }),
-
-/***/ "./Core/modules/Loader.js":
-/*!********************************!*\
-  !*** ./Core/modules/Loader.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-class Loader {
-    constructor(engine) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
-
-        this.status = "WAITING";
-
-        this.queue = new Hoot.Utils.List();
-        this.loading = null;
-        this.loaded = new Hoot.Utils.List();
-
-        this.canUse = false;
-        this.alreadyLoaded = false;
-
-        Hoot.Core.Events.addListener("hoot-loader-add-callback", function(event) {
-            this.preload(event.callback, event.caller);
-        }, this);
-    }
-
-    preload(callback, caller) {
-        if (typeof callback !== "function") {
-            return false;
-        }
-
-        callback.call(this);
-
-        this.start(caller);
-    }
-
-    load(file) {
-        if (!file instanceof Hoot.Load.File) {
-            return false;
-        }
-
-        if (!this.alreadLoaded) {
-            this.queue.add(file);
-        }
-    }
-
-    start(caller) {
-        if (this.queue.length <= 0) {
-            console.log("Hoot: Loader Complete");
-            this.status = "COMPLETE";
-            this.canUse = true;
-            this.alreadyLoaded = true;
-
-            new Hoot.Core.Event("hoot-loader-complete", { caller: caller, loader: this }).dispatch();
-        }else if (this.queue.length >= 1) {
-            this.status = "LOADING";
-
-            this.loading = this.queue.get("last");
-            this.queue.remove("last");
-
-            this.loading.load();
-
-            Hoot.Core.Events.addListener("hoot-loader-file-complete", function(event) {
-                if (event.file === this.loading) {
-                    this.loading = null;
-
-                    this.loaded.add(event.file);
-
-                    this.start();
-                }
-            }, this);
-        }
-    }
-
-    get(key) {
-        if (typeof key !== "string") {
-            return false;
-        }
-
-        for (let i in this.loaded.array) {
-            if (this.loaded.array[i].key === key) {
-                return this.loaded.get(i).data;
-            }
-        }
-    }
-}
-
-module.exports = Loader;
+eval("\r\n\r\nclass Display {\r\n    constructor(name, engine, config) {\r\n        this.name = name;\r\n        this.events = new Hoot.Events(\"display-\" + this.name);\r\n\r\n        this.engine = null;\r\n        if (engine instanceof Hoot.Engine) {\r\n            this.engine = engine;\r\n        }\r\n\r\n        this.config = this._fixConfig(config);\r\n\r\n        this.parent = null;\r\n        this.size = {\r\n            width: null,\r\n            height: null\r\n        };\r\n        this.scale = {\r\n            x: 1,\r\n            y: 1\r\n        };\r\n\r\n        this.smoothingEnabled = null;\r\n\r\n        this.canvas = null;\r\n        this.context = null;\r\n\r\n        this.events.on(\"config-loaded\", function(event) {\r\n            this.parent = this.config.parent;\r\n            this.size.width = this.config.width;\r\n            this.size.height = this.config.height;\r\n            this.smoothingEnabled = this.config.smoothingEnabled;\r\n\r\n            if (document.readyState === \"complete\") {\r\n                this.init();\r\n            }else {\r\n                window.onload = function() {\r\n                    this.init();\r\n                }.bind(this);\r\n            }\r\n        }, this);\r\n\r\n        this.events.on(\"ready\", function(event) {\r\n            console.log(\"Display Ready\");\r\n        }, this);\r\n\r\n        this.events.emit(\"config-loaded\", { config: this.config });\r\n    }\r\n\r\n    init() {\r\n        this.canvas = document.createElement(\"canvas\");\r\n        this.canvas.width = this.size.width;\r\n        this.canvas.height = this.size.height;\r\n        this.context = this.canvas.getContext(\"2d\");\r\n        this.context.translate(0.5, 0.5);\r\n        this.context.scale(this.scale.x, this.scale.y);\r\n\r\n        this.context.imageSmoothingEnabled = this.smoothingEnabled;\r\n\r\n        if (this.parent === document.body) {\r\n            document.body.appendChild(this.canvas);\r\n        }else {\r\n            document.getElementById(this.parent).appendChild(this.canvas);\r\n        }\r\n\r\n        this.events.emit(\"ready\", { display: this });\r\n    }\r\n\r\n    _fixConfig(config) {\r\n        if (typeof config !== \"object\") {\r\n            config = {\r\n                parent: document.body,\r\n                width: 960,\r\n                height: 720,\r\n                smoothingEnabled: true\r\n            };\r\n        }else {\r\n            if (typeof config.parent !== \"string\") {\r\n                config.parent = document.body;\r\n            }\r\n            if (typeof config.width !== \"number\") {\r\n                config.width = 960;\r\n            }\r\n            if (typeof config.height !== \"number\") {\r\n                config.height = 720;\r\n            }\r\n            if (typeof config.smoothingEnabled !== \"boolean\") {\r\n                config.smoothingEnabled = true;\r\n            }\r\n        }\r\n\r\n        return config;\r\n    }\r\n\r\n    getWidth() {\r\n        return this.size.width;\r\n    }\r\n\r\n    getHeight() {\r\n        return this.size.height;\r\n    }\r\n\r\n    getCanvas() {\r\n        return this.canvas;\r\n    }\r\n\r\n    getContext() {\r\n        return this.context;\r\n    }\r\n}\r\n\r\nmodule.exports = Display;\r\n\n\n//# sourceURL=webpack:///./DOM/Display.js");
 
 /***/ }),
 
@@ -508,97 +147,29 @@ module.exports = Loader;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const DOM = {
-    Display: __webpack_require__(/*! ./modules/Display */ "./DOM/modules/Display.js")
-};
-
-module.exports = DOM;
+eval("\r\nconst DOM = {\r\n    Display: __webpack_require__(/*! ./Display */ \"./DOM/Display.js\")\r\n};\r\n\r\nmodule.exports = DOM;\n\n//# sourceURL=webpack:///./DOM/index.js");
 
 /***/ }),
 
-/***/ "./DOM/modules/Display.js":
-/*!********************************!*\
-  !*** ./DOM/modules/Display.js ***!
-  \********************************/
+/***/ "./Engine.js":
+/*!*******************!*\
+  !*** ./Engine.js ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+eval("\r\nclass Engine {\r\n    constructor(name) {\r\n        this.name = name;\r\n        this.events = new Hoot.Events(\"engine-\" + this.name);\r\n\r\n        this.events.on(\"ready\", function(event) {\r\n            console.log(\"Engine Ready\");\r\n        }, this);\r\n\r\n        this.events.emit(\"ready\", { engine: this });\r\n    }\r\n\r\n}\r\n\r\nmodule.exports = Engine;\n\n//# sourceURL=webpack:///./Engine.js");
 
+/***/ }),
 
-class Display {
-    constructor(engine, parent, width, height, options) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
+/***/ "./Events.js":
+/*!*******************!*\
+  !*** ./Events.js ***!
+  \*******************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-        this.parent = parent || null;
-        this.options = options || {};
-
-        this.size = {
-            width: width || 960,
-            height: height || 720
-        };
-
-        this.scale = {
-            x: 1,
-            y: 1
-        };
-
-        this.canvas = null;
-        this.context = null;
-        if (document.readyState === "complete") {
-            this.init();
-        }else {
-            window.onload = function() {
-                this.init();
-            }.bind(this);
-        }
-
-    }
-
-    init() {
-        this.canvas = document.createElement("canvas");
-        this.canvas.width = this.size.width;
-        this.canvas.height = this.size.height;
-        this.context = this.canvas.getContext("2d");
-        this.context.translate(0.5, 0.5);
-        this.context.scale(this.scale.x, this.scale.y);
-
-        if (typeof this.options.smoothingEnabled === "boolean") {
-            this.context.imageSmoothingEnabled = this.options.smoothingEnabled;
-        }
-
-        if (typeof this.parent !== "string") {
-            document.body.appendChild(this.canvas);
-        }else {
-            document.getElementById(this.parent).appendChild(this.canvas);
-        }
-
-        new Hoot.Core.Event("hoot-display-loaded", { display: this }).dispatch();
-    }
-
-    getWidth() {
-        return this.size.width;
-    }
-
-    getHeight() {
-        return this.size.height;
-    }
-
-    getCanvas() {
-        return this.canvas;
-    }
-
-    getContext() {
-        return this.context;
-    }
-}
-
-module.exports = Display;
-
+eval("\r\nclass Events {\r\n    constructor(name) {\r\n        this.name = name;\r\n    }\r\n\r\n    on(name, callback, callbackScope) {\r\n        let callback2 = callback.bind(callbackScope || null);\r\n        document.addEventListener(this.name + \"-\" + name, function(event) {\r\n            callback2(event.detail);\r\n        });\r\n    }\r\n\r\n    emit(name, options) {\r\n        let eventName = this.name + \"-\" + name;\r\n        let event = new CustomEvent(eventName, { detail: options });\r\n        event.initEvent(eventName, true, true);\r\n        document.dispatchEvent(event);\r\n    }\r\n\r\n}\r\n\r\nmodule.exports = Events;\n\n//# sourceURL=webpack:///./Events.js");
 
 /***/ }),
 
@@ -609,12 +180,7 @@ module.exports = Display;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const GameObjects = {
-    Sprite: __webpack_require__(/*! ./modules/Sprite */ "./GameObjects/modules/Sprite.js")
-};
-
-module.exports = GameObjects;
+eval("\r\nconst GameObjects = {\r\n    Sprite: __webpack_require__(/*! ./modules/Sprite */ \"./GameObjects/modules/Sprite.js\")\r\n};\r\n\r\nmodule.exports = GameObjects;\n\n//# sourceURL=webpack:///./GameObjects/index.js");
 
 /***/ }),
 
@@ -625,40 +191,18 @@ module.exports = GameObjects;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+eval("\r\n\r\nclass Sprite {\r\n    constructor(engine, x, y, texture, frame) {\r\n        this.engine = engine || null;\r\n        this.hasEngine = true;\r\n        if (this.engine === null) {\r\n            this.hasEngine = false;\r\n        }\r\n\r\n        this.position = {\r\n            x: x,\r\n            y: y\r\n        };\r\n\r\n        this.texture = texture;\r\n        this.frame = frame;\r\n\r\n        this.scroll = {\r\n            x: x,\r\n            y: y\r\n        };\r\n    }\r\n\r\n    tick() {\r\n\r\n    }\r\n\r\n    render() {\r\n        this.engine.getDisplay().getContext().drawImage(this.texture.data, this.scroll.x, this.scroll.y, this.texture.data.width, this.texture.data.height);\r\n    }\r\n}\r\n\r\nmodule.exports = Sprite;\n\n//# sourceURL=webpack:///./GameObjects/modules/Sprite.js");
 
+/***/ }),
 
-class Sprite {
-    constructor(engine, x, y, texture, frame) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
+/***/ "./Load/ImageFile.js":
+/*!***************************!*\
+  !*** ./Load/ImageFile.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-        this.position = {
-            x: x,
-            y: y
-        };
-
-        this.texture = texture;
-        this.frame = frame;
-
-        this.scroll = {
-            x: x,
-            y: y
-        };
-    }
-
-    tick() {
-
-    }
-
-    render() {
-        this.engine.getDisplay().getContext().drawImage(this.texture.data, this.scroll.x, this.scroll.y, this.texture.data.width, this.texture.data.height);
-    }
-}
-
-module.exports = Sprite;
+eval("\r\nclass ImageFile {\r\n    constructor(loader, key, path, config) {\r\n        this.events = new Hoot.Events(\"image-\" + (loader.images.length).toString());\r\n\r\n        this.loader = loader;\r\n\r\n        this.key = key;\r\n        this.path = path;\r\n        this.config = this._fixConfig(config);\r\n\r\n        this.extension = this.path.split(\".\").pop();\r\n\r\n        this.loadable = false;\r\n        if (this.extension === \"png\" || this.extension === \"jpg\" || this.extension === \"jpeg\") {\r\n            this.loadable = true;\r\n        }\r\n\r\n        this.frame = {};\r\n        if (this.config.frameWidth === \"get\") {\r\n            this.frame.width = null;\r\n        }else {\r\n            this.frame.width = this.config.frameWidth;\r\n        }\r\n\r\n        if (this.config.frameHeight === \"get\") {\r\n            this.frame.height = null;\r\n        }else {\r\n            this.frame.height = this.config.frameHeight;\r\n        }\r\n\r\n        this.size = {\r\n            width: null,\r\n            height: null\r\n        };\r\n\r\n        this.isLoading = true;\r\n\r\n        this.data = null;\r\n    }\r\n\r\n    _fixConfig(config) {\r\n        if (typeof config !== \"object\") {\r\n            config = {\r\n                frameWidth: \"get\",\r\n                frameHeight: \"get\"\r\n            };\r\n        }else {\r\n            if (typeof config.frameWidth !== \"number\") {\r\n                config.frameWidth = \"get\";\r\n            }\r\n            if (typeof config.frameHeight !== \"number\") {\r\n                config.frameHeight = \"get\";\r\n            }\r\n        }\r\n\r\n\r\n        return config;\r\n    }\r\n\r\n    load() {\r\n        if (this.loadable) {\r\n            this.data = new Image();\r\n            this.data.src = this.loader.basePath + this.path;\r\n\r\n            this.data.onload = function() {\r\n                this.size.width = this.data.width;\r\n                this.size.height = this.data.height;\r\n\r\n                if (this.frame.width === null) {\r\n                    this.frame.width = this.data.width;\r\n                }\r\n                if (this.frame.height === null) {\r\n                    this.frame.height = this.data.height;\r\n                }\r\n\r\n                this.events.emit(\"loaded\", { image: this });\r\n            }.bind(this);\r\n        }\r\n    }\r\n}\r\n\r\nmodule.exports = ImageFile;\r\n\n\n//# sourceURL=webpack:///./Load/ImageFile.js");
 
 /***/ }),
 
@@ -669,79 +213,40 @@ module.exports = Sprite;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-
-const Load = {
-    File: __webpack_require__(/*! ./modules/File */ "./Load/modules/File.js")
-};
-
-module.exports = Load;
+eval("\r\n\r\nconst Load = {\r\n    ImageFile: __webpack_require__(/*! ./ImageFile */ \"./Load/ImageFile.js\")\r\n};\r\n\r\nmodule.exports = Load;\n\n//# sourceURL=webpack:///./Load/index.js");
 
 /***/ }),
 
-/***/ "./Load/modules/File.js":
-/*!******************************!*\
-  !*** ./Load/modules/File.js ***!
-  \******************************/
+/***/ "./Loader.js":
+/*!*******************!*\
+  !*** ./Loader.js ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+eval("\r\nclass Loader {\r\n    constructor(name, engine) {\r\n        this.name = name;\r\n        this.events = new Hoot.Events(\"loader-\" + this.name);\r\n\r\n        this.engine = null;\r\n        if (engine instanceof Hoot.Engine) {\r\n            this.engine = engine;\r\n        }\r\n\r\n        this.basePath = \"./\";\r\n\r\n        this.status = \"WAITING\";\r\n\r\n        this.queue = new Hoot.Utils.List();\r\n        this.currentFile = null;\r\n        this.loaded = new Hoot.Utils.List();\r\n\r\n        this.images = new Hoot.Utils.List();\r\n\r\n        this.canUse = false;\r\n    }\r\n\r\n    preLoad() {\r\n        if (this.queue.length <= 0) {\r\n            this.canUse = false;\r\n        }\r\n    }\r\n\r\n    load() {\r\n        if (this.queue.length > 0) {\r\n            this.currentFile = this.queue.get(\"last\");\r\n            this.currentFile.load();\r\n\r\n            this.currentFile.events.on(\"loaded\", function(event) {\r\n                this.loaded.add(event.image);\r\n\r\n                if (this.queue.length <= 0) {\r\n                    this.events.emit(\"complete\", { loader: this });\r\n                }\r\n            }, this);\r\n\r\n            this.queue.remove(\"last\");\r\n        }\r\n    }\r\n\r\n    postLoad() {\r\n        if (this.queue.length <= 0) {\r\n            this.canUse = true;\r\n        }\r\n    }\r\n\r\n    start() {\r\n        this.preLoad();\r\n        this.load();\r\n        this.postLoad();\r\n    }\r\n\r\n    /*\r\n     * Load different file types\r\n     */\r\n    loadImage(key, path, config) {\r\n        this.queue.add(new Hoot.Load.ImageFile(this, key, path, config));\r\n        this.images.add(this.queue.get(\"last\"));\r\n    }\r\n\r\n    get(key) {\r\n        if (typeof key !== \"string\") {\r\n            return false;\r\n        }\r\n\r\n        for (let i in this.loaded.array) {\r\n            if (this.loaded.array[i].key === key) {\r\n                return this.loaded.get(i).data;\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\nmodule.exports = Loader;\n\n//# sourceURL=webpack:///./Loader.js");
 
+/***/ }),
 
-class File {
-    constructor(key, path, options) {
-        this.key = key || "";
-        this.path = path || "";
-        this.options = options || {};
+/***/ "./Math/Random.js":
+/*!************************!*\
+  !*** ./Math/Random.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-        this.extension = this.path.split(".").pop();
-        this.type = null;
+eval("\r\nfunction random(min, max, decimal) {\r\n    if (typeof min !== \"number\") {\r\n        return Math.random();\r\n    }\r\n    if (typeof max !== \"number\") {\r\n        return Math.random();\r\n    }\r\n    if (typeof decimal !== \"number\") {\r\n        min = Math.ceil(min);\r\n        max = Math.floor(max);\r\n\r\n        return (Math.random() * (max - min + 1)) + min;\r\n    }\r\n\r\n    min = Math.ceil(min);\r\n    max = Math.floor(max);\r\n\r\n    return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(decimal);\r\n}\r\n\r\nmodule.exports = random;\n\n//# sourceURL=webpack:///./Math/Random.js");
 
-        this.data = null;
+/***/ }),
 
-        this.init();
-    }
+/***/ "./Math/index.js":
+/*!***********************!*\
+  !*** ./Math/index.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-    init() {
-        if (this.extension === "png" || this.extension === "jpg" || this.extension === "jpeg") {
-            this.type = "image";
-        }else if (this.extension === "mp3" || this.extension === "wav" || this.extension === "ogg") {
-            this.type = "audio";
-        }else if (this.extension === "js") {
-            this.type = "script";
-        }else {
-            this.type = "unknown";
-        }
-    }
-
-    load() {
-        this.data = new Image();
-        this.data.src = this.path;
-
-        this.data.onload = function() {
-            let event = new Hoot.Core.Event("hoot-loader-file-complete", { file: this }).dispatch();
-        }.bind(this);
-    }
-
-    on(eventName, callback, callbackScope) {
-        if (typeof eventName !== "string") {
-            return false;
-        }
-        if (typeof callback !== "function") {
-            return false;
-        }
-        const callback2 = callback.bind(callbackScope || null);
-        if (eventName === "complete") {
-            Hoot.Core.Events.addListener("hoot-loader-file-complete", function(event) {
-                if (event.data === this) {
-                    callback2();
-                }
-            }, this);
-        }
-    }
-}
-
-module.exports = File;
+eval("\r\nconst Math = {\r\n    random: __webpack_require__(/*! ./Random */ \"./Math/Random.js\")\r\n};\r\n\r\nmodule.exports = Math;\n\n//# sourceURL=webpack:///./Math/index.js");
 
 /***/ }),
 
@@ -752,13 +257,7 @@ module.exports = File;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const Network = {
-    Server: __webpack_require__(/*! ./modules/Server */ "./Network/modules/Server.js"),
-    Client: __webpack_require__(/*! ./modules/Client */ "./Network/modules/Client.js")
-};
-
-module.exports = Network;
+eval("\r\nconst Network = {\r\n    Server: __webpack_require__(/*! ./modules/Server */ \"./Network/modules/Server.js\"),\r\n    Client: __webpack_require__(/*! ./modules/Client */ \"./Network/modules/Client.js\")\r\n};\r\n\r\nmodule.exports = Network;\n\n//# sourceURL=webpack:///./Network/index.js");
 
 /***/ }),
 
@@ -769,26 +268,7 @@ module.exports = Network;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-class Client {
-    constructor(engine) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
-
-
-    }
-
-    createAction(text) {
-        let data = new Blob([text], { type: 'text/plain' });
-
-        let textFile = window.URL.createObjectURL(data);
-    }
-}
-
-module.exports = Client;
+eval("\r\nclass Client {\r\n    constructor(engine) {\r\n        this.engine = engine || null;\r\n        this.hasEngine = true;\r\n        if (this.engine === null) {\r\n            this.hasEngine = false;\r\n        }\r\n\r\n\r\n    }\r\n\r\n    createAction(text) {\r\n        let data = new Blob([text], { type: 'text/plain' });\r\n\r\n        let textFile = window.URL.createObjectURL(data);\r\n    }\r\n}\r\n\r\nmodule.exports = Client;\n\n//# sourceURL=webpack:///./Network/modules/Client.js");
 
 /***/ }),
 
@@ -799,47 +279,7 @@ module.exports = Client;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-
-
-class Server {
-    constructor(engine, url) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
-
-        this.connectionTries = 3;
-        this.connectionTryDelay = 5000;
-
-        this.local = true;
-
-        this.url = url || "localhost:8000";
-
-        this.socket = false;
-        this.connect();
-
-        this.socket.addEventListener("error", function(event) {
-            if (this.connectionTries > 0) {
-                this.connectionTries -= 1;
-
-                console.error("Hoot Server: Connection Failed - Retrying in " + this.connectionTryDelay + "ms");
-
-                window.setTimeout(this.connect(), this.connectionTryDelay);
-            }else {
-                console.error("Hoot Server: Connection Failed")
-            }
-        }.bind(this));
-    }
-
-    connect() {
-        this.socket = new WebSocket(this.url);
-        console.log(this.socket);
-    }
-}
-
-module.exports = Server;
+eval("\r\n\r\n\r\nclass Server {\r\n    constructor(engine, url) {\r\n        this.engine = engine || null;\r\n        this.hasEngine = true;\r\n        if (this.engine === null) {\r\n            this.hasEngine = false;\r\n        }\r\n\r\n        this.connectionTries = 3;\r\n        this.connectionTryDelay = 5000;\r\n\r\n        this.local = true;\r\n\r\n        this.url = url || \"localhost:8000\";\r\n\r\n        this.socket = false;\r\n        this.connect();\r\n\r\n        this.socket.addEventListener(\"error\", function(event) {\r\n            if (this.connectionTries > 0) {\r\n                this.connectionTries -= 1;\r\n\r\n                console.error(\"Hoot Server: Connection Failed - Retrying in \" + this.connectionTryDelay + \"ms\");\r\n\r\n                window.setTimeout(this.connect(), this.connectionTryDelay);\r\n            }else {\r\n                console.error(\"Hoot Server: Connection Failed\")\r\n            }\r\n        }.bind(this));\r\n    }\r\n\r\n    connect() {\r\n        this.socket = new WebSocket(this.url);\r\n        console.log(this.socket);\r\n    }\r\n}\r\n\r\nmodule.exports = Server;\n\n//# sourceURL=webpack:///./Network/modules/Server.js");
 
 /***/ }),
 
@@ -850,14 +290,7 @@ module.exports = Server;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-
-const Scenes = {
-    Scene: __webpack_require__(/*! ./modules/Scene */ "./Scenes/modules/Scene.js"),
-    Manager: __webpack_require__(/*! ./modules/Manager */ "./Scenes/modules/Manager.js")
-};
-
-module.exports = Scenes;
+eval("\r\n\r\nconst Scenes = {\r\n    Scene: __webpack_require__(/*! ./modules/Scene */ \"./Scenes/modules/Scene.js\"),\r\n    Manager: __webpack_require__(/*! ./modules/Manager */ \"./Scenes/modules/Manager.js\")\r\n};\r\n\r\nmodule.exports = Scenes;\n\n//# sourceURL=webpack:///./Scenes/index.js");
 
 /***/ }),
 
@@ -868,56 +301,7 @@ module.exports = Scenes;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-class Manager {
-    constructor(engine) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
-
-        this.scenes = new Hoot.Utils.List();
-
-        this.current = {
-            scene: null
-        };
-    }
-
-    add(scene) {
-        if (!(scene instanceof Hoot.Scenes.Scene)) {
-            return false;
-        }
-
-        this.scenes.add(scene);
-    }
-
-    start(name) {
-        if (typeof key !== "string") {
-            if (this.scenes.length >= 1) {
-                name = this.scenes.get(0).name;
-            }else {
-                return false;
-            }
-        }
-
-        for (let i in this.scenes.array) {
-            if (this.scenes.get(i).name === name) {
-                this.scenes.get(i).start();
-
-                this.current.scene = this.scenes.get(i);
-            }
-        }
-    }
-
-    stop() {
-        for (let i in this.scenes.array) {
-            this.scenes.get(i).stop();
-        }
-    }
-}
-
-module.exports = Manager;
+eval("\r\nclass Manager {\r\n    constructor(engine) {\r\n        this.engine = engine || null;\r\n        this.hasEngine = true;\r\n        if (this.engine === null) {\r\n            this.hasEngine = false;\r\n        }\r\n\r\n        this.scenes = new Hoot.Utils.List();\r\n\r\n        this.current = {\r\n            scene: null\r\n        };\r\n    }\r\n\r\n    add(scene) {\r\n        if (!(scene instanceof Hoot.Scenes.Scene)) {\r\n            return false;\r\n        }\r\n\r\n        this.scenes.add(scene);\r\n    }\r\n\r\n    start(name) {\r\n        if (typeof key !== \"string\") {\r\n            if (this.scenes.length >= 1) {\r\n                name = this.scenes.get(0).name;\r\n            }else {\r\n                return false;\r\n            }\r\n        }\r\n\r\n        for (let i in this.scenes.array) {\r\n            if (this.scenes.get(i).name === name) {\r\n                this.scenes.get(i).start();\r\n\r\n                this.current.scene = this.scenes.get(i);\r\n            }\r\n        }\r\n    }\r\n\r\n    stop() {\r\n        for (let i in this.scenes.array) {\r\n            this.scenes.get(i).stop();\r\n        }\r\n    }\r\n}\r\n\r\nmodule.exports = Manager;\n\n//# sourceURL=webpack:///./Scenes/modules/Manager.js");
 
 /***/ }),
 
@@ -928,62 +312,7 @@ module.exports = Manager;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-class Scene {
-    constructor(engine, name, callbacks) {
-        this.engine = engine || null;
-        this.hasEngine = true;
-        if (this.engine === null) {
-            this.hasEngine = false;
-        }
-
-        this.callbacks = callbacks || {
-            init: function() {},
-            preload: function() {},
-            create: function() {},
-            tick: function() {},
-            render: function() {}
-        };
-
-        this.isRunning = false;
-    }
-
-    start(data) {
-        if (this.isRunning) {
-            return false;
-        }
-
-        if (this.hasEngine) {
-            this.callbacks.init(data);
-
-            new Hoot.Core.Event("hoot-loader-add-callback", { callback: this.callbacks.preload, caller: this }).dispatch();
-
-            Hoot.Core.Events.addListener("hoot-loader-complete", function(event) {
-                //if (event.caller === this) {
-                    this.callbacks.create(data);
-
-                    this.isRunning = true;
-
-                    this.engine.time.addAnimationFrameCallback(this.callbacks.tick(data), null);
-                    this.engine.time.addAnimationFrameCallback(this.callbacks.render(data), null);
-                //}
-            }, this);
-        }
-    }
-
-    stop() {
-        if (!this.isRunning) {
-            return false;
-        }
-
-        this.isRunning = false;
-
-        this.engine.time.removeAnimationFrameCallback(this.callbacks.tick, this.engine);
-        this.engine.time.removeAnimationFrameCallback(this.callbacks.render, this.engine);
-    }
-}
-
-module.exports = Scene;
+eval("\r\nclass Scene {\r\n    constructor(engine, name, callbacks) {\r\n        this.engine = engine || null;\r\n        this.hasEngine = true;\r\n        if (this.engine === null) {\r\n            this.hasEngine = false;\r\n        }\r\n\r\n        this.callbacks = callbacks || {\r\n            init: function() {},\r\n            preload: function() {},\r\n            create: function() {},\r\n            tick: function() {},\r\n            render: function() {}\r\n        };\r\n\r\n        this.isRunning = false;\r\n    }\r\n\r\n    start(data) {\r\n        if (this.isRunning) {\r\n            return false;\r\n        }\r\n\r\n        if (this.hasEngine) {\r\n            this.callbacks.init(data);\r\n\r\n            new Hoot.Core.Event(\"hoot-loader-add-callback\", { callback: this.callbacks.preload, caller: this }).dispatch();\r\n\r\n            Hoot.Core.Events.addListener(\"hoot-loader-complete\", function(event) {\r\n                //if (event.caller === this) {\r\n                    this.callbacks.create(data);\r\n\r\n                    this.isRunning = true;\r\n\r\n                    this.engine.time.addAnimationFrameCallback(this.callbacks.tick(data), null);\r\n                    this.engine.time.addAnimationFrameCallback(this.callbacks.render(data), null);\r\n                //}\r\n            }, this);\r\n        }\r\n    }\r\n\r\n    stop() {\r\n        if (!this.isRunning) {\r\n            return false;\r\n        }\r\n\r\n        this.isRunning = false;\r\n\r\n        this.engine.time.removeAnimationFrameCallback(this.callbacks.tick, this.engine);\r\n        this.engine.time.removeAnimationFrameCallback(this.callbacks.render, this.engine);\r\n    }\r\n}\r\n\r\nmodule.exports = Scene;\n\n//# sourceURL=webpack:///./Scenes/modules/Scene.js");
 
 /***/ }),
 
@@ -994,12 +323,7 @@ module.exports = Scene;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const Stored = {
-    Number: __webpack_require__(/*! ./modules/Number */ "./Stored/modules/Number.js")
-};
-
-module.exports = Stored;
+eval("\r\nconst Stored = {\r\n    Number: __webpack_require__(/*! ./modules/Number */ \"./Stored/modules/Number.js\")\r\n};\r\n\r\nmodule.exports = Stored;\n\n//# sourceURL=webpack:///./Stored/index.js");
 
 /***/ }),
 
@@ -1010,43 +334,18 @@ module.exports = Stored;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+eval("\r\nclass Number {\r\n    constructor(name, value) {\r\n        this.name = name || \"hoot-unknown\";\r\n        this.value = value || 0;\r\n\r\n        if (this.exists()) {\r\n            this.value = this.get();\r\n        }else {\r\n            localStorage.setItem(this.name, this.value);\r\n        }\r\n    }\r\n\r\n    get() {\r\n        return localStorage.getItem(this.name);\r\n    }\r\n\r\n    set(value) {\r\n        if (typeof value !== \"number\") {\r\n            return false;\r\n        }\r\n\r\n        this.value = value || this.value;\r\n\r\n        localStorage.setItem(this.name, this.value);\r\n    }\r\n\r\n    exists() {\r\n        if (this.get() === null) {\r\n            return false;\r\n        }else {\r\n            return true;\r\n        }\r\n    }\r\n}\r\n\r\nmodule.exports = Number;\n\n//# sourceURL=webpack:///./Stored/modules/Number.js");
 
-class Number {
-    constructor(name, value) {
-        this.name = name || "hoot-unknown";
-        this.value = value || 0;
+/***/ }),
 
-        if (this.exists()) {
-            this.value = this.get();
-        }else {
-            localStorage.setItem(this.name, this.value);
-        }
-    }
+/***/ "./Time/Event.js":
+/*!***********************!*\
+  !*** ./Time/Event.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-    get() {
-        return localStorage.getItem(this.name);
-    }
-
-    set(value) {
-        if (typeof value !== "number") {
-            return false;
-        }
-
-        this.value = value || this.value;
-
-        localStorage.setItem(this.name, this.value);
-    }
-
-    exists() {
-        if (this.get() === null) {
-            return false;
-        }else {
-            return true;
-        }
-    }
-}
-
-module.exports = Number;
+eval("\r\nclass Event {\r\n    constructor(config) {\r\n        this.config = this._fixConfig(config);\r\n\r\n        this.data = null;\r\n        this.repeated = 0;\r\n\r\n        if (this.config.repeat == -1) {\r\n            this.data = window.setInterval(this.config.callback.bind(this.config.callbackScope), this.config.delay);\r\n        }else if (this.config.repeat > 0) {\r\n            this.data = window.setInterval(function() {\r\n                if (this.repeated <= this.config.repeat) {\r\n                    this.config().callback.bind(this.config.callbackScope);\r\n                }else {\r\n                    this.stop();\r\n                }\r\n\r\n                this.repeated += 1;\r\n            }.bind(this), this.config.delay);\r\n        }else if (this.config.repeat == 0) {\r\n            this.data = window.setTimeout(this.config.callback.bind(this.config.callbackScope), this.config.delay);\r\n        }\r\n\r\n\r\n        this.isRunning = true;\r\n    }\r\n\r\n    _fixConfig(config) {\r\n        if (typeof config !== \"object\") {\r\n            config = {\r\n                delay: 100,\r\n                callback: function() {},\r\n                callbackScope: null,\r\n                repeat: 0\r\n            };\r\n        }else {\r\n            if (typeof config.delay !== \"number\") {\r\n                config.delay = 100;\r\n            }\r\n            if (typeof config.callback !== \"function\") {\r\n                callback.callback = function() {};\r\n            }\r\n            if (typeof config.callbackScope === \"undefined\") {\r\n                config.callbackScope = null;\r\n            }\r\n            if (typeof config.repeat !== \"number\") {\r\n                config.repeat = 0;\r\n            }\r\n        }\r\n\r\n        return config;\r\n    }\r\n\r\n    start() {\r\n        if (this.isRunning) {\r\n            return;\r\n        }\r\n\r\n        this.isRunning = true;\r\n    }\r\n\r\n    stop() {\r\n        if (!this.isRunning) {\r\n            return;\r\n        }\r\n\r\n        this.isRunning = false;\r\n\r\n        if (this.config.repeat === 0) {\r\n            this.data = window.clearTimeout(this.data);\r\n        }else {\r\n            this.data = window.clearInterval(this.data);\r\n        }\r\n    }\r\n}\r\n\r\nmodule.exports = Event;\n\n//# sourceURL=webpack:///./Time/Event.js");
 
 /***/ }),
 
@@ -1057,165 +356,18 @@ module.exports = Number;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const Time = {
-    Event: __webpack_require__(/*! ./modules/Event */ "./Time/modules/Event.js"),
-    Loop: __webpack_require__(/*! ./modules/Loop */ "./Time/modules/Loop.js"),
-    Manager: __webpack_require__(/*! ./modules/Manager */ "./Time/modules/Manager.js")
-};
-
-module.exports = Time;
+eval("\r\nconst Time = {\r\n    Event: __webpack_require__(/*! ./Event */ \"./Time/Event.js\")\r\n};\r\n\r\nmodule.exports = Time;\n\n//# sourceURL=webpack:///./Time/index.js");
 
 /***/ }),
 
-/***/ "./Time/modules/Event.js":
-/*!*******************************!*\
-  !*** ./Time/modules/Event.js ***!
-  \*******************************/
+/***/ "./Utils/List.js":
+/*!***********************!*\
+  !*** ./Utils/List.js ***!
+  \***********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-class Event {
-    constructor(delay, callback, callbackScope, engine) {
-        if (typeof delay !== "number") {
-            delay = 1000;
-        }
-        if (typeof callback !== "function") {
-            callback = function() {};
-        }
-        this.delay = delay;
-        this.callback = callback.bind(callbackScope || null);
-        this.engine = engine || null;
-
-        this.data = null;
-        this.running = false;
-    }
-
-    start() {
-        if (this.running) {
-            return;
-        }
-
-        this.data = window.setTimeout(this.callback, this.delay);
-        this.running = true;
-    }
-
-    stop() {
-        if (!this.running) {
-            return;
-        }
-
-        window.clearTimeout(this.data);
-        this.data = null;
-        this.running = false;
-    }
-}
-
-module.exports = Event;
-
-/***/ }),
-
-/***/ "./Time/modules/Loop.js":
-/*!******************************!*\
-  !*** ./Time/modules/Loop.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-class Loop {
-    constructor(delay, callback, callbackScope, autoStart, engine) {
-        if (typeof delay !== "number") {
-            delay = 1000;
-        }
-        if (typeof callback !== "function") {
-            callback = function() {};
-        }
-        if (typeof autoStart !== "boolean") {
-            autoStart = true;
-        }
-        this.delay = delay;
-        this.callback = callback.bind(callbackScope || null);
-        this.callbackScope = callbackScope || null;
-        this.engine = engine || null;
-
-        this.data = null;
-        this.running = false;
-
-        if (autoStart) {
-            this.start();
-        }
-    }
-
-    start() {
-        if (this.running) {
-            return;
-        }
-
-        this.data = window.setInterval(this.callback, this.delay);
-        this.running = true;
-    }
-
-    stop() {
-        if (!this.running) {
-            return;
-        }
-
-        window.clearInterval(this.data);
-        this.data = null;
-        this.running = false;
-    }
-}
-
-module.exports = Loop;
-
-/***/ }),
-
-/***/ "./Time/modules/Manager.js":
-/*!*********************************!*\
-  !*** ./Time/modules/Manager.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-class Manager {
-    constructor(engine) {
-
-        this.engine = engine || null;
-        if (this.engine === null) {
-            new Hoot.Core.Event("hoot-engine-handler-requestEngine", { data: this }).dispatch();
-            this.hasEngine = false;
-        }else {
-            this.hasEngine = true;
-        }
-
-        this.animationFrameCallbacks = new Hoot.Utils.List();
-    }
-
-    addAnimationFrameCallback(callback) {
-        this.animationFrameCallbacks.add(callback);
-    }
-
-    removeAnimationFrameCallback(callback) {
-        for (let i in this.animationFrameCallbacks.array) {
-            if (this.animationFrameCallbacks.array[i] === callback) {
-                this.animationFrameCallbacks.remove(i);
-            }
-        }
-    }
-
-    animationFrame() {
-        for (let i in this.animationFrameCallbacks.array) {
-            this.animationFrameCallbacks.array[i].bind(null).call(null);
-        }
-
-        window.requestAnimationFrame(this.animationFrame);
-    }
-}
-
-module.exports = Manager;
+eval("\r\nclass List {\r\n    constructor(array) {\r\n        this.array = array || [];\r\n\r\n        this.length = this.array.length;\r\n    }\r\n\r\n    add(value) {\r\n        this.array.push(value);\r\n\r\n        this.length = this.array.length;\r\n    }\r\n\r\n    remove(index) {\r\n        if (typeof index === \"undefined\") {\r\n            index = \"first\";\r\n        }\r\n\r\n        if (index === \"last\") {\r\n            index = (this.array.length - 1);\r\n        }\r\n\r\n        if (index === \"first\") {\r\n            index = 0;\r\n        }\r\n\r\n        if (index === \"random\") {\r\n            index = Hoot.Math.random(0, (this.array.length - 1), 0);\r\n        }\r\n\r\n        let array = this.array;\r\n        this.array = [];\r\n\r\n        for (let i in array) {\r\n            if (i != (index)) {\r\n                this.array.push(array[i]);\r\n            }\r\n        }\r\n\r\n        this.length = this.array.length;\r\n    }\r\n\r\n    get(index) {\r\n        if (typeof index === \"undefined\") {\r\n            index = \"first\";\r\n        }\r\n\r\n        if (index === \"last\") {\r\n            index = (this.array.length - 1);\r\n        }\r\n\r\n        if (index === \"first\") {\r\n            index = 0;\r\n        }\r\n\r\n        if (index === \"random\") {\r\n            index = Hoot.Math.random(0, (this.array.length - 1), 0);\r\n        }\r\n\r\n        return this.array[index];\r\n    }\r\n\r\n}\r\n\r\nmodule.exports = List;\n\n//# sourceURL=webpack:///./Utils/List.js");
 
 /***/ }),
 
@@ -1226,62 +378,7 @@ module.exports = Manager;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const Utils = {
-    List: __webpack_require__(/*! ./modules/List */ "./Utils/modules/List.js")
-};
-
-module.exports = Utils;
-
-/***/ }),
-
-/***/ "./Utils/modules/List.js":
-/*!*******************************!*\
-  !*** ./Utils/modules/List.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-class List {
-    constructor(array) {
-        this.array = array || [];
-
-        this.length = this.array.length;
-    }
-
-    add(value) {
-        this.array.push(value);
-
-        this.length = this.array.length;
-    }
-
-    remove(index) {
-        if (index === "last") {
-            index = (this.array.length - 1);
-        }
-        let array = this.array;
-        this.array = [];
-
-        for (let i in array) {
-            if (i != (index)) {
-                this.array.push(array[i]);
-            }
-        }
-
-        this.length = this.array.length;
-    }
-
-    get(index) {
-        if (index === "last") {
-            index = (this.array.length - 1);
-        }
-        return this.array[index];
-    }
-
-}
-
-module.exports = List;
+eval("\r\nconst Utils = {\r\n    List: __webpack_require__(/*! ./List */ \"./Utils/List.js\")\r\n};\r\n\r\nmodule.exports = Utils;\n\n//# sourceURL=webpack:///./Utils/index.js");
 
 /***/ }),
 
@@ -1292,26 +389,9 @@ module.exports = List;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {
-const Hoot = {
-    Cameras: __webpack_require__(/*! ./Cameras */ "./Cameras/index.js"),
-    Core: __webpack_require__(/*! ./Core */ "./Core/index.js"),
-    DOM: __webpack_require__(/*! ./DOM */ "./DOM/index.js"),
-    GameObjects: __webpack_require__(/*! ./GameObjects */ "./GameObjects/index.js"),
-    Load: __webpack_require__(/*! ./Load */ "./Load/index.js"),
-    Network: __webpack_require__(/*! ./Network */ "./Network/index.js"),
-    Scenes: __webpack_require__(/*! ./Scenes */ "./Scenes/index.js"),
-    Stored: __webpack_require__(/*! ./Stored */ "./Stored/index.js"),
-    Time: __webpack_require__(/*! ./Time */ "./Time/index.js"),
-    Utils: __webpack_require__(/*! ./Utils */ "./Utils/index.js")
-};
-
-module.exports = Hoot;
-global.Hoot = Hoot;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
+eval("/* WEBPACK VAR INJECTION */(function(global) {\r\nconst Hoot = {\r\n    //Files\r\n    Engine: __webpack_require__(/*! ./Engine */ \"./Engine.js\"),\r\n    Events: __webpack_require__(/*! ./Events */ \"./Events.js\"),\r\n    Loader: __webpack_require__(/*! ./Loader */ \"./Loader.js\"),\r\n    //Folders\r\n    Cameras: __webpack_require__(/*! ./Cameras */ \"./Cameras/index.js\"),\r\n    DOM: __webpack_require__(/*! ./DOM */ \"./DOM/index.js\"),\r\n    GameObjects: __webpack_require__(/*! ./GameObjects */ \"./GameObjects/index.js\"),\r\n    Load: __webpack_require__(/*! ./Load */ \"./Load/index.js\"),\r\n    Math: __webpack_require__(/*! ./Math */ \"./Math/index.js\"),\r\n    Network: __webpack_require__(/*! ./Network */ \"./Network/index.js\"),\r\n    Scenes: __webpack_require__(/*! ./Scenes */ \"./Scenes/index.js\"),\r\n    Stored: __webpack_require__(/*! ./Stored */ \"./Stored/index.js\"),\r\n    Time: __webpack_require__(/*! ./Time */ \"./Time/index.js\"),\r\n    Utils: __webpack_require__(/*! ./Utils */ \"./Utils/index.js\")\r\n};\r\n\r\nmodule.exports = Hoot;\r\nglobal.Hoot = Hoot;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"../node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./hoot.js");
 
 /***/ })
 
 /******/ });
 });
-//# sourceMappingURL=hoot.js.map

@@ -53,6 +53,6 @@ module.exports = {
     },
     plugins: [
         //new CleanWebpackPlugin([ 'build' ])
-    ],
-    devtool: "source-map"
+    ]//,
+    //devtool: "source-map"
 };

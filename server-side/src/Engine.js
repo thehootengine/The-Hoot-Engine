@@ -9,7 +9,7 @@ class Engine {
             console.log("Hoot: No 'package.json' file path supplied");
             this.enabled = false;
         }
-        this.events = new Hoot.Core.Events();
+        this.events = new Hoot.Events();
 
         this.status = "working";
 

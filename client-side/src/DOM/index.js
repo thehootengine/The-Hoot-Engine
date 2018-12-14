@@ -1,6 +1,6 @@
 
 const DOM = {
-    Display: require("./modules/Display")
+    Display: require("./Display")
 };
 
 module.exports = DOM;

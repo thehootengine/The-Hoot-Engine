@@ -4,10 +4,11 @@
     "local": true
   },
   "client": {
-    "basePath": "client",
+    "basePath": "public",
     "views": [
       {
         "default": true,
+        "name": "home",
         "path": "index.html"
       }
     ]

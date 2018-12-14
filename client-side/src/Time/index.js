@@ -1,8 +1,6 @@
 
 const Time = {
-    Event: require("./modules/Event"),
-    Loop: require("./modules/Loop"),
-    Manager: require("./modules/Manager")
+    Event: require("./Event")
 };
 
 module.exports = Time;

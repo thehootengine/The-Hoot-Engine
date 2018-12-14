@@ -1,6 +1,6 @@
 
 const Network = {
-    Server: require("./modules/Server")
+    Server: require("./Server")
 };
 
 module.exports = Network;
