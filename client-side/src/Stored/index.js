@@ -1,6 +1,6 @@
 
 const Stored = {
-    Number: require("./modules/Number")
+    Number: require("./Number")
 };
 
 module.exports = Stored;

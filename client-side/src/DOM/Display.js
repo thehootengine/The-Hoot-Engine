@@ -8,6 +8,8 @@ class Display {
         this.engine = null;
         if (engine instanceof Hoot.Engine) {
             this.engine = engine;
+
+            this.engine.addDisplay(this);
         }
 
         this.config = this._fixConfig(config);
@@ -42,9 +44,6 @@ class Display {
             }
         }, this);
 
-        this.events.on("ready", function(event) {
-            console.log("Display Ready");
-        }, this);
 
         this.events.emit("config-loaded", { config: this.config });
     }

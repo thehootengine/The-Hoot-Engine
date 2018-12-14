@@ -7,13 +7,35 @@ const display = new Hoot.DOM.Display("display", engine, {
     smoothingEnabled: false
 });
 
-const loader = new Hoot.Loader("loader", engine);
-loader.loadImage("img-test", "assets/images/shoe.png");
 
-loader.events.on("complete", function() {
-    display.getContext().drawImage(loader.get("img-test").data, 20, 20);
-});
+class BootScene extends Hoot.Scene {
+    constructor() {
+        super("BootScene", engine);
+    }
+
+    init() {
+
+    }
+
+    preload() {
+        this.load.image("img-shoe", "assets/images/shoe.png");
+    }
+
+    create() {
+        console.log("Creating");
+    }
+
+    tick() {
+
+    }
+
+    render() {
+
+    }
+}
+
 
 display.events.on("ready", function() {
-    loader.start();
+    const scene = new BootScene();
+    scene.start();
 });

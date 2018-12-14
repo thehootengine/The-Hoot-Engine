@@ -4,6 +4,7 @@ const Hoot = {
     Engine: require("./Engine"),
     Events: require("./Events"),
     Loader: require("./Loader"),
+    Scene: require("./Scene"),
     //Folders
     Cameras: require("./Cameras"),
     DOM: require("./DOM"),
@@ -11,7 +12,7 @@ const Hoot = {
     Load: require("./Load"),
     Math: require("./Math"),
     Network: require("./Network"),
-    Scenes: require("./Scenes"),
+    //Scenes: require("./Scenes"),
     Stored: require("./Stored"),
     Time: require("./Time"),
     Utils: require("./Utils")

@@ -4,9 +4,10 @@ class Loader {
         this.name = name;
         this.events = new Hoot.Events("loader-" + this.name);
 
-        this.engine = null;
         if (engine instanceof Hoot.Engine) {
             this.engine = engine;
+
+            this.engine.addLoader(this);
         }
 
         this.basePath = "./";
@@ -76,6 +77,16 @@ class Loader {
 
         this.audio.add(file);
     }
+
+
+    image(key, path, config) {
+        this.loadImage(key, path, config);
+    }
+
+    audio(key, path, config) {
+        this.loadAudio(key, path, config);
+    }
+
 
     get(key) {
         if (typeof key !== "string") {
