@@ -1,6 +1,6 @@
 
 const GameObjects = {
-    Sprite: require("./modules/Sprite")
+    Sprite: require("./Sprite")
 };
 
 module.exports = GameObjects;

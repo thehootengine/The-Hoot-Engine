@@ -1,15 +1,14 @@
 
-class List {
-    constructor(array) {
-        this.array = array || [];
+class List extends Array {
+    constructor(...items) {
+        super(...items);
 
-        this.length = this.array.length;
+        this.items = items;
     }
 
     add(value) {
-        this.array.push(value);
-
-        this.length = this.array.length;
+        this.push(value);
+        this.items.push(value);
     }
 
     remove(index) {
@@ -18,7 +17,7 @@ class List {
         }
 
         if (index === "last") {
-            index = (this.array.length - 1);
+            index = (this.length - 1);
         }
 
         if (index === "first") {
@@ -26,19 +25,16 @@ class List {
         }
 
         if (index === "random") {
-            index = Hoot.Math.random(0, (this.array.length - 1), 0);
+            index = Hoot.Math.random(0, (this.length - 1), 0);
         }
 
-        let array = this.array;
-        this.array = [];
+        this.splice(index, 1);
+        this.items.splice(index, 1);
+    }
 
-        for (let i in array) {
-            if (i != (index)) {
-                this.array.push(array[i]);
-            }
-        }
-
-        this.length = this.array.length;
+    clear() {
+        this.splice(0, this.length);
+        this.items = [];
     }
 
     get(index) {
@@ -47,7 +43,7 @@ class List {
         }
 
         if (index === "last") {
-            index = (this.array.length - 1);
+            index = (this.length - 1);
         }
 
         if (index === "first") {
@@ -55,10 +51,10 @@ class List {
         }
 
         if (index === "random") {
-            index = Hoot.Math.random(0, (this.array.length - 1), 0);
+            index = Hoot.Math.random(0, (this.length - 1), 0);
         }
 
-        return this.array[index];
+        return this[index];
     }
 
 }

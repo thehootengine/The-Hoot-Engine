@@ -1,16 +1,11 @@
 
 
 class Display {
-    constructor(name, engine, config) {
+    constructor(name, config) {
         this.name = name;
         this.events = new Hoot.Events("display-" + this.name);
 
         this.engine = null;
-        if (engine instanceof Hoot.Engine) {
-            this.engine = engine;
-
-            this.engine.addDisplay(this);
-        }
 
         this.config = this._fixConfig(config);
 
@@ -46,6 +41,10 @@ class Display {
 
 
         this.events.emit("config-loaded", { config: this.config });
+    }
+
+    on(name, callback, callbackScope) {
+        this.events.on(name, callback, callbackScope);
     }
 
     init() {

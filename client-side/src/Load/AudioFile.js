@@ -56,31 +56,36 @@ class AudioFile {
 
             }.bind(this);
 
-            if (this.extension === "mp3") {
+            this._checkPlayable();
 
-                if (this.data.canPlayType("audio/mpeg")) {
-                    this.playable = true;
-                }
+        }
+    }
 
-            }else if (this.extension === "ogg") {
+    _checkPlayable() {
+        if (this.extension === "mp3") {
 
-                if (this.data.canPlayType("audio/ogg")) {
-                    this.playable = true;
-                }
-
-            }else if (this.extension === "wav") {
-
-                if (this.data.canPlayType("audio/wav")) {
-                    this.playable = true;
-                }
-
-            }else if (this.extension === "flac") {
-
-                if (this.data.canPlayType("audio/flac")) {
-                    this.playable = true;
-                }
-
+            if (this.data.canPlayType("audio/mpeg")) {
+                this.playable = true;
             }
+
+        }else if (this.extension === "ogg") {
+
+            if (this.data.canPlayType("audio/ogg")) {
+                this.playable = true;
+            }
+
+        }else if (this.extension === "wav") {
+
+            if (this.data.canPlayType("audio/wav")) {
+                this.playable = true;
+            }
+
+        }else if (this.extension === "flac") {
+
+            if (this.data.canPlayType("audio/flac")) {
+                this.playable = true;
+            }
+
         }
     }
 }

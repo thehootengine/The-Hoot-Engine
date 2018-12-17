@@ -1,7 +1,7 @@
 
 
 const engine = new Hoot.Engine("engine");
-const display = new Hoot.DOM.Display("display", engine, {
+const display = new Hoot.DOM.Display("display", {
     width: 960,
     height: 720,
     smoothingEnabled: false
@@ -10,7 +10,7 @@ const display = new Hoot.DOM.Display("display", engine, {
 
 class BootScene extends Hoot.Scene {
     constructor() {
-        super("BootScene", engine);
+        super("BootScene");
     }
 
     init() {
@@ -22,7 +22,7 @@ class BootScene extends Hoot.Scene {
     }
 
     create() {
-        console.log("Creating");
+
     }
 
     tick() {
@@ -35,7 +35,10 @@ class BootScene extends Hoot.Scene {
 }
 
 
-display.events.on("ready", function() {
-    const scene = new BootScene();
-    scene.start();
-});
+display.on("ready", function() {
+    engine.addScene(BootScene);
+
+
+
+    engine.startScene("BootScene");
+}, null);
