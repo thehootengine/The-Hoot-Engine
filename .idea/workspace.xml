@@ -127,7 +127,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="html" value="12" />
-          <entry key="js" value="122" />
+          <entry key="js" value="123" />
           <entry key="json" value="22" />
           <entry key="map" value="3" />
           <entry key="md" value="1" />
@@ -138,7 +138,7 @@
         <counts>
           <entry key="HTML" value="12" />
           <entry key="JSON" value="22" />
-          <entry key="JavaScript" value="122" />
+          <entry key="JavaScript" value="123" />
           <entry key="Markdown" value="1" />
           <entry key="RNG Compact" value="1" />
           <entry key="SourceMap" value="3" />
@@ -147,7 +147,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="132" />
-          <entry key="js" value="50575" />
+          <entry key="js" value="52021" />
           <entry key="json" value="1908" />
           <entry key="md" value="803" />
         </counts>
@@ -156,7 +156,7 @@
         <counts>
           <entry key="HTML" value="132" />
           <entry key="JSON" value="1908" />
-          <entry key="JavaScript" value="50575" />
+          <entry key="JavaScript" value="52021" />
           <entry key="Markdown" value="803" />
         </counts>
       </usages-collector>
@@ -175,17 +175,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client-side/src/DOM/Display.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="45" column="39" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client-side/src/Scene.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="148" column="30" selection-start-line="148" selection-start-column="30" selection-end-line="148" selection-end-column="30" />
+            <state relative-caret-position="246">
+              <caret line="143" column="8" selection-start-line="143" selection-start-column="8" selection-end-line="143" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -211,8 +202,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client-side/src/Engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
+            <state relative-caret-position="178">
+              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
             </state>
           </provider>
         </entry>
@@ -300,12 +291,12 @@
         <option value="$PROJECT_DIR$/client-side/src/Load/AudioFile.js" />
         <option value="$PROJECT_DIR$/client-side/src/GameObjects/index.js" />
         <option value="$PROJECT_DIR$/client-side/src/Utils/List.js" />
-        <option value="$PROJECT_DIR$/client-side/src/DOM/Display.js" />
         <option value="$PROJECT_DIR$/test/public/js/main.js" />
         <option value="$PROJECT_DIR$/client-side/src/Scene.js" />
         <option value="$PROJECT_DIR$/client-side/src/Load/ImageFile.js" />
         <option value="$PROJECT_DIR$/client-side/src/Loader.js" />
         <option value="$PROJECT_DIR$/client-side/src/Engine.js" />
+        <option value="$PROJECT_DIR$/client-side/src/DOM/Display.js" />
       </list>
     </option>
   </component>
@@ -802,12 +793,12 @@
       <workItem from="1544971557411" duration="49000" />
       <workItem from="1544971686635" duration="347000" />
       <workItem from="1544989308007" duration="2455000" />
-      <workItem from="1545008898835" duration="1926000" />
+      <workItem from="1545008898835" duration="2721000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153296000" />
+    <option name="totallyTimeSpent" value="154091000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1023,13 +1014,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client-side/src/Time/Event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client-side/src/Load/AudioFile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="829">
@@ -1075,10 +1059,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client-side/src/Engine.js">
+    <entry file="file://$PROJECT_DIR$/client-side/src/Time/Event.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
+        <state relative-caret-position="320">
+          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
         </state>
       </provider>
     </entry>
@@ -1089,17 +1073,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client-side/src/Engine.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client-side/src/Scene.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
+        <state relative-caret-position="1572">
           <caret line="148" column="30" selection-start-line="148" selection-start-column="30" selection-end-line="148" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client-side/src/DOM/Display.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="45" column="39" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
+        <state relative-caret-position="246">
+          <caret line="143" column="8" selection-start-line="143" selection-start-column="8" selection-end-line="143" selection-end-column="8" />
         </state>
       </provider>
     </entry>

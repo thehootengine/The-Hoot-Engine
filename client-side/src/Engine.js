@@ -93,7 +93,7 @@ class Engine {
 
 
                     //Start the created scene
-                    this.currentScene.start(config);
+                    this.currentScene.start(data);
 
                 }
 
